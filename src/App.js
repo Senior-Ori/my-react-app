@@ -8,7 +8,7 @@ function App() {
     <div className="App-header">
       <h1>Hello There!</h1>
       <InputForm labelText={"New Label Text"} inputType={"text"} />
-      <NamesList />
+      {/* <NamesList /> */}
       <DataFetching />
     </div>
   );
