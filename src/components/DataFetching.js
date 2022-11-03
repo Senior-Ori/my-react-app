@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./../App.css";
 
-function DataFetching(params) {
+function DataFetching() {
   const [names, setNames] = useState([]);
 
   useEffect(() => {
@@ -12,33 +12,31 @@ function DataFetching(params) {
         return res.json();
       })
       .then((res) => {
-        setNames(res);
-        console.log(res);
-        console.log(Object.values(res));
+        for (const key in res) {
+          setNames((prevState) => [
+            ...prevState,
+            {
+              id: key,
+              name: res[key].name,
+              amount: res[key].amount,
+              showDate: res[key].date,
+              nowDate: res[key].dateNow,
+            },
+          ]);
+        }
       })
       .catch((err) => {
         console.log(err.json());
       });
     console.log("DID FETCH!");
-    //forceUpdate();
   }, []);
 
-  const loadedNames = [];
-  for (const key in names) {
-    loadedNames.push({
-      id: key,
-      name: names[key].name,
-      amount: names[key].amount,
-      showDate: names[key].date,
-      nowDate: names[key].dateNow,
-    });
-  }
-  console.log(loadedNames);
+  console.log(names);
 
   return (
     <div>
       <ul className="no-bullets">
-        {loadedNames
+        {names
           .sort((b, a) => a.nowDate - b.nowDate)
           .map((data) => (
             <li key={data.nowDate}>{`/${data.showDate.slice(16, 24)}/ ${

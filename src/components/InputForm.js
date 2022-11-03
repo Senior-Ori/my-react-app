@@ -7,7 +7,6 @@ function InputForm(props) {
   const [temperInput, setTemperInput] = useState("");
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(enteredValue);
     setTemperInput(enteredValue);
     setEnteredValue("");
     setDidSubmit(true);

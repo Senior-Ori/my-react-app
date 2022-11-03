@@ -2,10 +2,9 @@ import { useState, useEffect } from "react";
 
 function FetchUpdate(props) {
   const [list, setList] = useState([]);
-  const loadedNames = [];
-
-  useEffect(() => {
-    fetch(
+  console.log("(you want to see this only once)");
+  async function fetchList() {
+    await fetch(
       "https://ori-projects-default-rtdb.europe-west1.firebasedatabase.app/names.json"
     )
       .then((response) => {
@@ -13,22 +12,22 @@ function FetchUpdate(props) {
       })
       .then((data) => {
         console.log("fetched:", data);
-        setList(data);
-        console.log(props.enteredName);
+        for (const key in data) {
+          setList((prevState) => [
+            ...prevState,
+            {
+              id: key,
+              name: data[key].name,
+              amount: data[key].amount,
+              lastUpdate: data[key].date,
+            },
+          ]);
+        }
       });
-  }, [props.enteredName]);
-
-  if (list[0] !== undefined) {
-    for (const key in list) {
-      loadedNames.push({
-        id: key,
-        name: list[key].name,
-        amount: list[key].amount,
-        lastUpdate: list[key].date,
-      });
-    }
   }
-  const found = loadedNames.find((names) => names.name === props.enteredName);
+
+  fetchList();
+  const found = list.find((names) => names.name === props.enteredName);
 
   useEffect(() => {
     if (list[0] !== undefined) {
@@ -58,17 +57,10 @@ function FetchUpdate(props) {
                 dateNow: Date.now(),
               }),
             }
-          )
-            .then((response) => {
-              return response.json();
-            })
-            .then((data) => {
-              console.log("fetched3:", data);
-              //setList(data);
-              console.log(props.enteredName);
-            });
-      console.log(found && found.id);
-      console.log("flag has been Submited");
+          ).then((response) => {
+            return response.json();
+          });
+
       return props.flagSubmit(false);
     }
   }, [found, list, props]);

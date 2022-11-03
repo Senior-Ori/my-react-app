@@ -1,7 +1,6 @@
 import "./App.css";
 import DataFetching from "./components/DataFetching";
 import InputForm from "./components/InputForm";
-import NamesList from "./components/NamesList";
 
 function App() {
   return (
