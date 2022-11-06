@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import InputForm from "./InputForm";
 import "./../App.css";
 
 function DataFetching(props) {
@@ -34,25 +33,22 @@ function DataFetching(props) {
   }, []);
 
   console.log(list, props);
+  const addNameHandler = (name) => {
+    setList((prevList) => {
+      prevList.concat(name);
+    });
+  };
 
   return (
-    <div>
-      <InputForm
-        labelText={"Enter your name "}
-        inputType={"text"}
-        setList={setList}
-        list={list}
-      />
-      <ul className="no-bullets">
-        {list
-          .sort((b, a) => a.nowDate - b.nowDate)
-          .map((data) => (
-            <li key={data.nowDate}>{`/${data.showDate.slice(16, 24)}/ ${
-              data.name
-            } entered ${data.amount} times`}</li>
-          ))}
-      </ul>
-    </div>
+    <ul className="no-bullets">
+      {list
+        .sort((b, a) => a.nowDate - b.nowDate)
+        .map((data) => (
+          <li key={data.nowDate}>{`/${data.showDate.slice(16, 24)}/ ${
+            data.name
+          } entered ${data.amount} times`}</li>
+        ))}
+    </ul>
   );
 }
 export default DataFetching;
