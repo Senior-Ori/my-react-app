@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import FetchUpdate from "./FetchUpdate";
 //be aware to send {props.labelText} & {props.inputType}.
 function InputForm(props) {
-  const [enteredValue, setEnteredValue] = useState("");
+  const enteredValueRef = useRef("");
   const [didSubmit, setDidSubmit] = useState(false);
   const [temperInput, setTemperInput] = useState("");
   const handleSubmit = (event) => {
     event.preventDefault();
-    setTemperInput(enteredValue);
-    setEnteredValue("");
+    setTemperInput(enteredValueRef.current.value);
+    enteredValueRef.current.value = "";
     setDidSubmit(true);
   };
   return (
@@ -16,14 +16,12 @@ function InputForm(props) {
       {didSubmit && (
         <FetchUpdate enteredName={temperInput} flagSubmit={setDidSubmit} />
       )}
-      {/* {React.useEffect(() => setDidSubmit(false), [didSubmit])} */}
       <form onSubmit={handleSubmit}>
         <label>
           {props.labelText === undefined ? "labelText" : props.labelText}
           <input
             type={props.inputType === undefined ? "text" : props.inputType}
-            value={enteredValue}
-            onChange={(event) => setEnteredValue(event.target.value)}
+            ref={enteredValueRef}
           />
         </label>
         <input type="submit" />

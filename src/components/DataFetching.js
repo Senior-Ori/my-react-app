@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
+import InputForm from "./InputForm";
 import "./../App.css";
 
-function DataFetching() {
-  const [names, setNames] = useState([]);
+function DataFetching(props) {
+  const [list, setList] = useState([]);
 
   useEffect(() => {
     fetch(
@@ -13,7 +14,7 @@ function DataFetching() {
       })
       .then((res) => {
         for (const key in res) {
-          setNames((prevState) => [
+          setList((prevState) => [
             ...prevState,
             {
               id: key,
@@ -25,18 +26,25 @@ function DataFetching() {
           ]);
         }
       })
+
       .catch((err) => {
         console.log(err.json());
       });
     console.log("DID FETCH!");
   }, []);
 
-  console.log(names);
+  console.log(list, props);
 
   return (
     <div>
+      <InputForm
+        labelText={"Enter your name "}
+        inputType={"text"}
+        setList={setList}
+        list={list}
+      />
       <ul className="no-bullets">
-        {names
+        {list
           .sort((b, a) => a.nowDate - b.nowDate)
           .map((data) => (
             <li key={data.nowDate}>{`/${data.showDate.slice(16, 24)}/ ${
