@@ -6,6 +6,8 @@ function App() {
   return (
     <div className="App-header">
       <h1>Hello There!</h1>
+      <h1>{process.env.jojo}</h1>
+      {console.log(process.env.jojo)}
       <FetchUpdate />
       <DataFetching />
     </div>
