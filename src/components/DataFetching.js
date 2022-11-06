@@ -5,9 +5,7 @@ function DataFetching(props) {
   const [list, setList] = useState([]);
 
   useEffect(() => {
-    fetch(
-      "https://ori-projects-default-rtdb.europe-west1.firebasedatabase.app/names.json"
-    )
+    fetch(process.env.jojo)
       .then((res) => {
         return res.json();
       })
