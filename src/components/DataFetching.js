@@ -31,13 +31,11 @@ function DataFetching(props) {
       });
     console.log("DID FETCH!");
   }, []);
+  useEffect(() => {
+    props.list && setList((prevList) => prevList.concat(props.list));
+  }, [props.list]);
 
   console.log(list, props);
-  const addNameHandler = (name) => {
-    setList((prevList) => {
-      prevList.concat(name);
-    });
-  };
 
   return (
     <ul className="no-bullets">

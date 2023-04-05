@@ -1,7 +1,7 @@
 import { useState } from "react";
 import InputForm from "./InputForm";
 
-function FetchUpdate() {
+function FetchUpdate(props) {
   const [error, setError] = useState(null);
   console.log("(you want to see this only once)");
   const fetchNewName = async (enteredName) => {
@@ -52,6 +52,15 @@ function FetchUpdate() {
             ).then((response) => {
               return response.json();
             });
+        {
+          props.updateLocalList({
+            amount: 1,
+            //id: Date.now().toString,
+            name: enteredName,
+            nowDate: Date.now(),
+            showDate: Date(),
+          });
+        }
       }
     } catch (err) {
       setError(err.message || "Something went wrong!");
